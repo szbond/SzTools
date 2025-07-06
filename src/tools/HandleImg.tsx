@@ -6,13 +6,13 @@ import Chip from '@mui/material/Chip';
 import JSzip from 'jszip'
 import  saveAs  from 'file-saver'
 import { 
-  alpha,
   // Button, 
     // Card, CardContent, 
     // CardActions, Grid,
     Box, Typography, 
     // IconButton, styled, Container 
   } from '@mui/material';
+import {StyledInputPlaced} from '../styledComponents/StyledCompo'
 import {FluentColorLinkMultiple24,FluentColorApps24,CatppuccinImage,FluentEmojiFlatUpDownArrow,FluentColorDismissCircle24,FluentColorImage24, FluentEmojiFlatLeftRightArrow,FluentColorArrowSquare24,FluentEmojiFlatLeftArrow, FluentEmojiFlatRightArrow} from '../icon/MyIcon'
 import { NavLink } from 'react-router';
 type Rectangle = {
@@ -662,12 +662,7 @@ const drawCanvas = useCallback(() => {
           
         </Box>
         
-        <Box className='flex_col'sx={{
-          border:'1px dashed',
-          borderRadius:2,
-          backgroundColor:(theme)=>alpha(theme.palette.divider, 0.05),
-          borderColor:(theme)=>theme.palette.divider
-        }}>
+        <StyledInputPlaced className='flex_col'>
           {image ? (
             <>
             <Box className='flex_row chipRow'>
@@ -765,7 +760,7 @@ const drawCanvas = useCallback(() => {
             ref={fileInputRef}
             style={{ display: 'none' }}
           />
-        </Box>
+        </StyledInputPlaced>
       </div>
     </div>
   );

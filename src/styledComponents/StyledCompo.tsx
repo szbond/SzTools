@@ -2,7 +2,7 @@
 // import { BorderLeft } from '@mui/icons-material'
 // import { Height } from '@mui/icons-material'
 // import { Height } from '@mui/icons-material'
-import{styled, Box, Typography,} from '@mui/material'
+import{styled, Box, alpha,Typography,} from '@mui/material'
 import { NavLink } from 'react-router'
 const StyledButton = styled('button')(({theme})=>[
     {
@@ -219,4 +219,11 @@ export const StyledUploadArea = styled(Box)(({ theme }) => ({
   alignItems: 'center',
   justifyContent: 'center',
 }));
+export const StyledInputPlaced = styled(Box)(({theme})=>({
+              border:'1px dashed',
+              borderRadius:2,
+              backgroundColor:alpha(theme.palette.divider, 0.05),
+              borderColor:theme.palette.divider,
+
+}))
 export default StyledButton
