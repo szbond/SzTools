@@ -12,8 +12,11 @@ import {
     Box, Typography, 
     // IconButton, styled, Container 
   } from '@mui/material';
-import {StyledInputPlaced, StyledCatureBox} from '../styledComponents/StyledCompo'
-import {FluentColorLinkMultiple24,FluentColorApps24,CatppuccinImage,FluentEmojiFlatUpDownArrow,FluentColorDismissCircle24,FluentColorImage24, FluentEmojiFlatLeftRightArrow,FluentColorArrowSquare24,FluentEmojiFlatLeftArrow, FluentEmojiFlatRightArrow} from '../icon/MyIcon'
+import {
+  StyledInputPlaced, 
+  // StyledCatureBox
+} from '../styledComponents/StyledCompo'
+import {FluentColorLinkMultiple24,FluentColorApps24,FluentEmojiFlatUpDownArrow,FluentColorDismissCircle24,FluentColorImage24, FluentEmojiFlatLeftRightArrow,FluentColorArrowSquare24,FluentEmojiFlatLeftArrow, FluentEmojiFlatRightArrow} from '../icon/MyIcon'
 import { NavLink } from 'react-router';
 import FileUpload from './FileUpload';
 type Rectangle = {
