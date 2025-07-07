@@ -1,8 +1,8 @@
 // interface Image{
 //     src:string,
 // }
-// import * as StackBlur from 'stackblur-canvas';
-import {image} from 'stackblur-canvas';
+import * as StackBlur from 'stackblur-canvas';
+// import {image} from 'stackblur-canvas';
 import {
     StyledInputPlaced, 
     // StyledCatureBox
@@ -106,15 +106,16 @@ const [error, setError] = useState<string | null>(null);
 
     const blurCanvas = document.createElement('canvas');
     const blurCtx = blurCanvas.getContext('2d');
-    if (!blurCtx) return;
+    if (!blurCtx) {
+        setError('find no blurCtx')
+        return};
 
     const blurFactor = 0.3;
     blurCanvas.width = img.width * blurFactor;
     blurCanvas.height = img.height * blurFactor;
 
     blurCtx.drawImage(img, 0, 0, blurCanvas.width, blurCanvas.height);
-
-    image(img, blurCanvas, 100, true);
+    StackBlur.image(img, blurCanvas, 40, true);
     const blurStrength = 40;
 
     ctx.drawImage(
