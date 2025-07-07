@@ -17,6 +17,11 @@ export default defineConfig({
             return 'static/css/[name][extname]'}
           return 'static/asset/[name][extname]'
 
+        },
+        manualChunks(id){
+          if (id.includes('stackblur-canvas')){
+            return 'stackblur'
+          }
         }
       }
     }
