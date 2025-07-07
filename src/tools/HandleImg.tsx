@@ -6,15 +6,19 @@ import Chip from '@mui/material/Chip';
 import JSzip from 'jszip'
 import  saveAs  from 'file-saver'
 import { 
-  alpha,
   // Button, 
     // Card, CardContent, 
     // CardActions, Grid,
     Box, Typography, 
     // IconButton, styled, Container 
   } from '@mui/material';
-import {FluentColorLinkMultiple24,FluentColorApps24,CatppuccinImage,FluentEmojiFlatUpDownArrow,FluentColorDismissCircle24,FluentColorImage24, FluentEmojiFlatLeftRightArrow,FluentColorArrowSquare24,FluentEmojiFlatLeftArrow, FluentEmojiFlatRightArrow} from '../icon/MyIcon'
+import {
+  StyledInputPlaced, 
+  // StyledCatureBox
+} from '../styledComponents/StyledCompo'
+import {FluentColorLinkMultiple24,FluentColorApps24,FluentEmojiFlatUpDownArrow,FluentColorDismissCircle24,FluentColorImage24, FluentEmojiFlatLeftRightArrow,FluentColorArrowSquare24,FluentEmojiFlatLeftArrow, FluentEmojiFlatRightArrow} from '../icon/MyIcon'
 import { NavLink } from 'react-router';
+import FileUpload from './FileUpload';
 type Rectangle = {
   id: string;
   x: number;
@@ -662,12 +666,7 @@ const drawCanvas = useCallback(() => {
           
         </Box>
         
-        <Box className='flex_col'sx={{
-          border:'1px dashed',
-          borderRadius:2,
-          backgroundColor:(theme)=>alpha(theme.palette.divider, 0.05),
-          borderColor:(theme)=>theme.palette.divider
-        }}>
+        <StyledInputPlaced className='flex_col'>
           {image ? (
             <>
             <Box className='flex_row chipRow'>
@@ -725,37 +724,7 @@ const drawCanvas = useCallback(() => {
               </Box>
             </>
           ) : (
-            <div style={{
-              flex: '1',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: '40px',
-              textAlign: 'center'
-            }}>
-              <Box sx={(theme)=>({
-                borderRadius: 2,
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                bgcolor:theme.palette.background.paper,
-                // boxShadow:theme.shadows[2],
-                border:'1px solid',
-                borderColor:theme.palette.divider
-
-              })}>
-                <span style={{ fontSize: '48px', color: '#3498db' }}><CatppuccinImage/></span>
-              </Box>
-              <h3 style={{ fontSize: '1.8rem', marginBottom: '10px', color: '#2c3e50' }}>选择一张图片</h3>
-              <p style={{ color: '#34495e', marginBottom: '20px', maxWidth: '400px' }}>支持 JPG、PNG 格式的图片文件 </p>
-              
-              <Button 
-              variant='contained'
-                onClick={() => fileInputRef.current?.click()}>
-                选择图片
-              </Button>
-            </div>
+<FileUpload clickEvent={()=>{fileInputRef.current?.click()}}></FileUpload>
           )}
           
           <input 
@@ -765,7 +734,7 @@ const drawCanvas = useCallback(() => {
             ref={fileInputRef}
             style={{ display: 'none' }}
           />
-        </Box>
+        </StyledInputPlaced>
       </div>
     </div>
   );

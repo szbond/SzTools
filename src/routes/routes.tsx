@@ -11,10 +11,11 @@ const LazySplitImg = lazy(()=>import("../tools/SplitImg.tsx"))
 // const LazyWelcome = lazy(()=>import("./tools/DefaultWelcome"))
 // const LazyGuid = lazy(()=>import("../Guid.tsx"))
 const LazyJoinImg = lazy(()=>import("../tools/JoinImg.tsx"))
+const LazyFadeBground = lazy(()=>import("../tools/FadeBground.tsx"))
 // import SplitImg from ;
 // import { React } from "react";
 import DefaultWelcome from "../tools/DefaultWelcome.tsx";
-import Other  from "../tools/Other.tsx";
+// import Other  from "../tools/Other.tsx";
 // import Other  from "./tools/Other.tsx";
 // import Welcome  from "./tools/Other.tsx";
 import App  from "../App.tsx";
@@ -38,9 +39,9 @@ const router = createBrowserRouter([
         // name:'其他',
         element:<LazyJoinImg/>
     },{
-        path:'Other',
+        path:'FadeBground',
         // name:'其他',
-        element:<Other/>
+        element:<LazyFadeBground/>
     },
 
         ]

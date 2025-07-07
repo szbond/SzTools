@@ -24,6 +24,9 @@ export default function LeftBar(props:LeftBarProps){
         {
             name:'长图拼接',
             path:'./JoinImg'},
+        {
+            name:'模糊背景',
+            path:'./FadeBground'},
         
     ]
     return<div

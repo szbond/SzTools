@@ -212,7 +212,7 @@
   width:100%;
   overflow-y:auto;
   margin: 0 auto;
-  padding: 24px 32px;
+  padding: 32px 24px;
   /* padding-top: 32px; */
   /* background-color: #f5f7fa; */
   height: 100%;
@@ -292,5 +292,9 @@
  .joinImgContainer{
   height: calc(100vh - 270px);
   overflow-y: auto;
+ }
+ .allCenter{
+  justify-content:center;
+  align-items:center;
  }
  

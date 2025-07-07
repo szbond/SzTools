@@ -239,7 +239,7 @@ function JoinImg() {
   };
 
   return (
-    <Container  maxWidth={false} sx={{width:'100%',margin:0, py: 4,maxWidth:'none'}}>
+    <Container maxWidth={false} sx={{width:'100%',margin:0, py: 4,maxWidth:'none'}}>
       <Box sx={{ textAlign: 'center', mb:1 }}>
         <Typography variant="h4" component="h1" gutterBottom sx={{ fontWeight: 'bold', color: 'primary.main' }}>
           长图拼接
