@@ -43,6 +43,7 @@ const [error, setError] = useState<string | null>(null);
       if (typeof result === 'string') {
         setOriginalImage(result);
         processImage(result);
+        // reader.readAsDataURL(file);
       } else {
         setError('图片读取失败');
         setIsProcessing(false);
@@ -59,6 +60,7 @@ const [error, setError] = useState<string | null>(null);
   const processImage = (src: string) => {
 
     const img = new Image();
+    img.src = src;
     img.onload = () => {
 
       if (!canvasRef.current) return;
@@ -114,7 +116,7 @@ const [error, setError] = useState<string | null>(null);
       setError('图片加载失败');
       setIsProcessing(false);
     };
-    img.src = src;
+    
   };
   const createBlurBackground = (
     ctx: CanvasRenderingContext2D, 
