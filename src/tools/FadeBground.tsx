@@ -8,14 +8,17 @@ import {
     // StyledCatureBox
 } from '../styledComponents/StyledCompo'
 // import {CatppuccinImage} from '../icon/MyIcon'
-import { Box, Button, Chip, Typography } from "@mui/material"
+import { Box, Button, Chip, InputAdornment, TextField, Typography } from "@mui/material"
 import React, { useRef, useState, } from "react"
 import FileUpload from './FileUpload'
-import { FluentColorDismissCircle24 } from '../icon/MyIcon'
+import { FluentColorDismissCircle24, FluentColorArrowSquare24,  FluentColorArrowSync24} from '../icon/MyIcon'
 const FadeBground:React.FC = ()=>{
 const [originalImage, setOriginalImage] = useState<string | null>(null);
+const [radius, setRadius] = useState<number | null>(null);
+// const [fileresult, setFileresult] = useState<number | null>(null);
 const [processedImage, setProcessedImage] = useState<string | null>(null);
 const [isProcessing, setIsProcessing] = useState(false);
+const [blurR, setBlurR] = useState<number>(40);
 const canvasRef = useRef<HTMLCanvasElement>(null)
     // const [processedUrl, setProcessedUrl] = useState<string|null>(null)
 const fileInputRef = useRef<HTMLInputElement>(null)
@@ -74,10 +77,26 @@ const [error, setError] = useState<string | null>(null);
       // 设置画布尺寸为原图尺寸
       canvas.width = 2*img.width;
       canvas.height = 2*img.height;
+    // canvas.width = img.width;
+    //   canvas.height = img.height;
       
       // 创建模糊背景
       createBlurBackground(ctx, img, canvas);
       //在原图中心绘制原始图片
+      if(radius){
+        ctx.beginPath();
+        ctx.moveTo(img.width/2 + radius, img.height/2);
+
+        ctx.arcTo(3/2*img.width, img.height/2, 3/2*img.width, 3/2*img.height, radius);
+        ctx.arcTo(3/2*img.width, 3/2*img.height, img.width/2, 3/2*img.height, radius);
+        ctx.arcTo(img.width/2, 3/2*img.height, img.width/2, img.height/2, radius);
+        ctx.arcTo(img.width/2, img.height/2, 3/2*img.width, img.height/2, radius);
+        ctx.closePath();
+        ctx.clip();
+        
+
+      }
+      
       ctx.drawImage(
         img,
         (canvas.width - img.width) / 2,
@@ -95,7 +114,6 @@ const [error, setError] = useState<string | null>(null);
       setError('图片加载失败');
       setIsProcessing(false);
     };
-    
     img.src = src;
   };
   const createBlurBackground = (
@@ -103,6 +121,10 @@ const [error, setError] = useState<string | null>(null);
     img: HTMLImageElement, 
     canvas: HTMLCanvasElement
   )=>{
+    if(blurR<0 || blurR>255
+    ){
+        setError('模糊半径请限制在0-255')
+        return}
 
     const blurCanvas = document.createElement('canvas');
     const blurCtx = blurCanvas.getContext('2d');
@@ -115,7 +137,7 @@ const [error, setError] = useState<string | null>(null);
     blurCanvas.height = img.height * blurFactor;
 
     blurCtx.drawImage(img, 0, 0, blurCanvas.width, blurCanvas.height);
-    StackBlur.image(img, blurCanvas, 40, true);
+    StackBlur.image(img, blurCanvas, blurR, true);
     const blurStrength = 40;
 
     ctx.drawImage(
@@ -127,42 +149,6 @@ const [error, setError] = useState<string | null>(null);
     );                
 
   }
-//   const createBlurBackground = (
-//     ctx: CanvasRenderingContext2D, 
-//     img: HTMLImageElement, 
-//     canvas: HTMLCanvasElement
-//   ) => {
-//     // 创建离屏画布用于模糊处理
-//     const blurCanvas = document.createElement('canvas');
-//     const blurCtx = blurCanvas.getContext('2d');
-//     if (!blurCtx) return;
-    
-//     // 设置模糊画布尺寸（比原图小可增强模糊效果）
-//     const blurFactor = 0.3;
-//     blurCanvas.width = img.width * blurFactor;
-//     blurCanvas.height = img.height * blurFactor;
-    
-//     // 绘制缩小版本
-//     blurCtx.drawImage(img, 0, 0, blurCanvas.width, blurCanvas.height);
-    
-//     // 应用模糊效果
-//     const blurStrength = 40;
-//     ctx.filter = `blur(${blurStrength}px)`;
-//     // console.log('ssssssssss');
-    
-    
-//     // 绘制模糊背景（扩大以覆盖整个画布）
-//     ctx.drawImage(
-//       blurCanvas, 
-//       0, 0, blurCanvas.width, blurCanvas.height,
-//       -blurStrength, -blurStrength, // 扩大模糊区域以消除边缘留白
-//       canvas.width + blurStrength * 2, 
-//       canvas.height + blurStrength * 2
-//     );
-    
-//     // 重置滤镜
-//     ctx.filter = 'none';
-//   };
     const handleDownload = () => {
     if (!processedImage) return;
     
@@ -178,6 +164,8 @@ const [error, setError] = useState<string | null>(null);
       fileInputRef.current.value = '';
       setOriginalImage(null)
       setProcessedImage(null)
+      setBlurR(40)
+      setRadius(null)
     }
 
   }
@@ -190,18 +178,28 @@ const [error, setError] = useState<string | null>(null);
         <Typography variant="subtitle1" color="text.secondary" gutterBottom>上传图片，生成一个原图模糊的背景框</Typography>
         </Box>
         <StyledInputPlaced sx={{width:'90%'}}>
-        
-        {originalImage?<Box>
-            <Box sx={{
+            {processedImage&&<Box className='flex_row allCenter' sx={{
                 padding:1,
+                gap:2,
+                // height:50,
                 borderBottom:'1px dashed',
                 borderBottomColor:(theme)=>theme.palette.divider
-                }}><Button color='error' size='small' onClick={handleReset}><FluentColorDismissCircle24/>重置</Button>
-                {error&&<Chip color='error' label={error}/>}
-                {isProcessing&&<Chip label='处理中'/>}
-                <Button onClick={handleDownload}>下载</Button>
-                </Box>
-            <Box sx={{
+                }}>
+                    {error&&<Chip color='error' label={error}/>}
+                    {isProcessing&&<Chip label='处理中'/>}
+                    
+                    <TextField slotProps={{
+                        input:{
+                            endAdornment: <InputAdornment position="end">px</InputAdornment>,
+                        }
+                    }} onChange={(e)=>{setRadius(parseInt(e.target.value))}} label='圆角' sx={{width:100}} defaultValue={0} size='small' type='number'/>
+                    <TextField  onChange={(e)=>setBlurR(Math.max(parseInt(e.target.value),0))} label='模糊度' sx={{width:100}} defaultValue={40} size='small' type='number'/>
+                    {originalImage&&<><Button variant='outlined' color='success'sx={{height:30}} onClick={()=>{processImage(originalImage)}}> <FluentColorArrowSync24/>生成</Button><Button sx={{height:30}} variant='outlined'  onClick={handleDownload}><FluentColorArrowSquare24/>下载</Button><Button sx={{height:30}} variant='outlined'  color='error' size='small' onClick={handleReset}><FluentColorDismissCircle24/>重置</Button></>}
+                </Box>}
+        
+
+        
+        {originalImage?<Box sx={{
             bgcolor:(theme)=>theme.palette.background.paper
 
         }} className="flex_col allCenter">
@@ -212,7 +210,7 @@ const [error, setError] = useState<string | null>(null);
             </Box>
             
         
-        </Box></Box>:<FileUpload clickEvent={()=>{fileInputRef.current?.click()}}/>
+        </Box>:<FileUpload clickEvent={()=>{fileInputRef.current?.click()}}/>
             }</StyledInputPlaced>
         
 
