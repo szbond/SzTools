@@ -30,11 +30,12 @@ const [error, setError] = useState<string | null>(null);
     if (!file.type.match('image.*')) {
       setError('请上传有效的图片文件 (JPEG, PNG, GIF)');
       return;
-    }
-    
     setError(null);
     setIsProcessing(true);
     setProcessedImage(null);
+    }
+    try{
+    
     
     const reader = new FileReader();
     reader.onload = (event) => {
@@ -56,6 +57,10 @@ const [error, setError] = useState<string | null>(null);
     };
     
     reader.readAsDataURL(file);
+
+    }
+    catch(error){alert(error)}
+
   };
   const processImage = (src: string) => {
 
@@ -77,22 +82,39 @@ const [error, setError] = useState<string | null>(null);
       }
       
       // 设置画布尺寸为原图尺寸
-      canvas.width = 2*img.width;
-      canvas.height = 2*img.height;
+      // 1. 计算原始比例
+      const originalRatio = img.width / img.height;
+      
+      // 2. 确定目标绘制尺寸（根据您的需求设置最大边）
+      const MAX_DRAW_SIZE = 1024; // 绘制到画布上的实际显示尺寸
+      let drawWidth, drawHeight;
+      
+      if (img.width > img.height) {
+        drawWidth = Math.min(img.width, MAX_DRAW_SIZE);
+        drawHeight = drawWidth / originalRatio;
+      } else {
+        drawHeight = Math.min(img.height, MAX_DRAW_SIZE);
+        drawWidth = drawHeight * originalRatio;
+      }
+      
+      // 3. 创建画布（尺寸是绘制尺寸的2倍）
+
+      canvas.width = drawWidth * 2;
+      canvas.height = drawHeight * 2;
     // canvas.width = img.width;
     //   canvas.height = img.height;
-      
+    //   ctx.scale(2, 2);
       // 创建模糊背景
       createBlurBackground(ctx, img, canvas);
       //在原图中心绘制原始图片
       if(radius){
         ctx.beginPath();
-        ctx.moveTo(img.width/2 + radius, img.height/2);
+        ctx.moveTo(drawWidth/2 + radius, drawHeight/2);
 
-        ctx.arcTo(3/2*img.width, img.height/2, 3/2*img.width, 3/2*img.height, radius);
-        ctx.arcTo(3/2*img.width, 3/2*img.height, img.width/2, 3/2*img.height, radius);
-        ctx.arcTo(img.width/2, 3/2*img.height, img.width/2, img.height/2, radius);
-        ctx.arcTo(img.width/2, img.height/2, 3/2*img.width, img.height/2, radius);
+        ctx.arcTo(3/2*drawWidth, drawHeight/2, 3/2*drawWidth, 3/2*drawHeight, radius);
+        ctx.arcTo(3/2*drawWidth, 3/2*drawHeight, drawWidth/2, 3/2*drawHeight, radius);
+        ctx.arcTo(drawWidth/2, 3/2*drawHeight, drawWidth/2, drawHeight/2, radius);
+        ctx.arcTo(drawWidth/2, drawHeight/2, 3/2*drawWidth, drawHeight/2, radius);
         ctx.closePath();
         ctx.clip();
         
@@ -101,14 +123,15 @@ const [error, setError] = useState<string | null>(null);
       
       ctx.drawImage(
         img,
-        (canvas.width - img.width) / 2,
-        (canvas.height - img.height) / 2,
-        img.width,
-        img.height
+        (canvas.width - drawWidth) / 2,
+        (canvas.height - drawHeight) / 2,
+        drawWidth,
+        drawHeight
       );
       
       // 生成处理后的URL
-      setProcessedImage(canvas.toDataURL('image/jpeg', 0.9));
+      const finalUrl = canvas.toDataURL('image/jpeg', 0.9)||canvas.toDataURL('image/png')
+      setProcessedImage(finalUrl);
       setIsProcessing(false);
     };
     
