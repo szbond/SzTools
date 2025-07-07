@@ -54,12 +54,17 @@ const [error, setError] = useState<string | null>(null);
     reader.readAsDataURL(file);
   };
   const processImage = (src: string) => {
+
     const img = new Image();
     img.onload = () => {
+
       if (!canvasRef.current) return;
       
       const canvas = canvasRef.current;
+
       const ctx = canvas.getContext('2d');
+
+
       if (!ctx) {
         setError('无法创建画布上下文');
         setIsProcessing(false);
@@ -72,7 +77,6 @@ const [error, setError] = useState<string | null>(null);
       
       // 创建模糊背景
       createBlurBackground(ctx, img, canvas);
-      
       //在原图中心绘制原始图片
       ctx.drawImage(
         img,
@@ -99,23 +103,27 @@ const [error, setError] = useState<string | null>(null);
     img: HTMLImageElement, 
     canvas: HTMLCanvasElement
   )=>{
+
     const blurCanvas = document.createElement('canvas');
     const blurCtx = blurCanvas.getContext('2d');
     if (!blurCtx) return;
-    
+
     const blurFactor = 0.3;
     blurCanvas.width = img.width * blurFactor;
     blurCanvas.height = img.height * blurFactor;
+
     blurCtx.drawImage(img, 0, 0, blurCanvas.width, blurCanvas.height);
+
     image(img, blurCanvas, 100, true);
     const blurStrength = 40;
+
     ctx.drawImage(
       blurCanvas, 
       0, 0, blurCanvas.width, blurCanvas.height,
       -blurStrength, -blurStrength, // 扩大模糊区域以消除边缘留白
       canvas.width + blurStrength * 2, 
       canvas.height + blurStrength * 2
-    );
+    );                
 
   }
 //   const createBlurBackground = (
@@ -175,6 +183,7 @@ const [error, setError] = useState<string | null>(null);
 
     return<Box sx={{padding: '32px 24px'}} className="flex_col allCenter" >
         <input style={{display:'none'}} accept="image/*"  ref={fileInputRef} type="file" onChange={handleImageUpload} />
+        <canvas style={{ display: 'none' }} ref={canvasRef}></canvas>
         <Box className="flex_col allCenter">
             <Typography variant='h4' sx={{fontWeight: 'bold'}} component="h1" gutterBottom color='primary'>模糊背景框</Typography>
         <Typography variant="subtitle1" color="text.secondary" gutterBottom>上传图片，生成一个原图模糊的背景框</Typography>
@@ -200,7 +209,7 @@ const [error, setError] = useState<string | null>(null);
                 {processedImage &&<img width={'50%'} src={processedImage }/>}
 
             </Box>
-            <canvas style={{ display: 'none' }} ref={canvasRef}></canvas>
+            
         
         </Box></Box>:<FileUpload clickEvent={()=>{fileInputRef.current?.click()}}/>
             }</StyledInputPlaced>
