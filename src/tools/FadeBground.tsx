@@ -1,19 +1,21 @@
 // interface Image{
 //     src:string,
 // }
+// import * as StackBlur from 'stackblur-canvas';
+import {image} from 'stackblur-canvas';
 import {
     StyledInputPlaced, 
     // StyledCatureBox
 } from '../styledComponents/StyledCompo'
 // import {CatppuccinImage} from '../icon/MyIcon'
 import { Box, Button, Chip, Typography } from "@mui/material"
-import React, { useRef, useState } from "react"
+import React, { useRef, useState, } from "react"
 import FileUpload from './FileUpload'
 import { FluentColorDismissCircle24 } from '../icon/MyIcon'
 const FadeBground:React.FC = ()=>{
 const [originalImage, setOriginalImage] = useState<string | null>(null);
 const [processedImage, setProcessedImage] = useState<string | null>(null);
- const [isProcessing, setIsProcessing] = useState(false);
+const [isProcessing, setIsProcessing] = useState(false);
 const canvasRef = useRef<HTMLCanvasElement>(null)
     // const [processedUrl, setProcessedUrl] = useState<string|null>(null)
 const fileInputRef = useRef<HTMLInputElement>(null)
@@ -92,32 +94,21 @@ const [error, setError] = useState<string | null>(null);
     
     img.src = src;
   };
-  
   const createBlurBackground = (
     ctx: CanvasRenderingContext2D, 
     img: HTMLImageElement, 
     canvas: HTMLCanvasElement
-  ) => {
-    // 创建离屏画布用于模糊处理
+  )=>{
     const blurCanvas = document.createElement('canvas');
     const blurCtx = blurCanvas.getContext('2d');
     if (!blurCtx) return;
     
-    // 设置模糊画布尺寸（比原图小可增强模糊效果）
     const blurFactor = 0.3;
     blurCanvas.width = img.width * blurFactor;
     blurCanvas.height = img.height * blurFactor;
-    
-    // 绘制缩小版本
     blurCtx.drawImage(img, 0, 0, blurCanvas.width, blurCanvas.height);
-    
-    // 应用模糊效果
+    image(img, blurCanvas, 100, true);
     const blurStrength = 40;
-    ctx.filter = `blur(${blurStrength}px)`;
-    // console.log('ssssssssss');
-    
-    
-    // 绘制模糊背景（扩大以覆盖整个画布）
     ctx.drawImage(
       blurCanvas, 
       0, 0, blurCanvas.width, blurCanvas.height,
@@ -125,10 +116,44 @@ const [error, setError] = useState<string | null>(null);
       canvas.width + blurStrength * 2, 
       canvas.height + blurStrength * 2
     );
+
+  }
+//   const createBlurBackground = (
+//     ctx: CanvasRenderingContext2D, 
+//     img: HTMLImageElement, 
+//     canvas: HTMLCanvasElement
+//   ) => {
+//     // 创建离屏画布用于模糊处理
+//     const blurCanvas = document.createElement('canvas');
+//     const blurCtx = blurCanvas.getContext('2d');
+//     if (!blurCtx) return;
     
-    // 重置滤镜
-    ctx.filter = 'none';
-  };
+//     // 设置模糊画布尺寸（比原图小可增强模糊效果）
+//     const blurFactor = 0.3;
+//     blurCanvas.width = img.width * blurFactor;
+//     blurCanvas.height = img.height * blurFactor;
+    
+//     // 绘制缩小版本
+//     blurCtx.drawImage(img, 0, 0, blurCanvas.width, blurCanvas.height);
+    
+//     // 应用模糊效果
+//     const blurStrength = 40;
+//     ctx.filter = `blur(${blurStrength}px)`;
+//     // console.log('ssssssssss');
+    
+    
+//     // 绘制模糊背景（扩大以覆盖整个画布）
+//     ctx.drawImage(
+//       blurCanvas, 
+//       0, 0, blurCanvas.width, blurCanvas.height,
+//       -blurStrength, -blurStrength, // 扩大模糊区域以消除边缘留白
+//       canvas.width + blurStrength * 2, 
+//       canvas.height + blurStrength * 2
+//     );
+    
+//     // 重置滤镜
+//     ctx.filter = 'none';
+//   };
     const handleDownload = () => {
     if (!processedImage) return;
     
