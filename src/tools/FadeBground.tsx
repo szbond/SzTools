@@ -2,7 +2,7 @@
 //     src:string,
 // }
 import {StyledInputPlaced} from '../styledComponents/StyledCompo'
-
+import {CatppuccinImage} from '../icon/MyIcon'
 import { Box, Typography } from "@mui/material"
 import React, { useRef, useState } from "react"
 const FadeBground:React.FC = ()=>{
@@ -49,7 +49,10 @@ const FadeBground:React.FC = ()=>{
             objectFit:'contain'
         }} src={image.src}/>
         <button onClick={handleResetImg}>重置</button>
-        </div>:<Box sx={{width:600, height:600}} onClick={() => fileInputRef.current?.click()}></Box>}</StyledInputPlaced>
+        </div>:<Box onClick={() => fileInputRef.current?.click()}>
+            <Box></Box>
+            <CatppuccinImage/>
+            </Box>}</StyledInputPlaced>
         <input style={{display:'none'}} accept="image/*"  ref={fileInputRef} type="file" onChange={handleImageUpload} />
 
     </Box>

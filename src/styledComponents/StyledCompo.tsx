@@ -40,6 +40,7 @@ const StyledButton = styled('button')(({theme})=>[
   }),
 
 ])
+//顶部状态栏
 export const StyledBox = styled(Box)(({theme})=>[
     {
         borderBottom:'1px solid',
@@ -221,9 +222,30 @@ export const StyledUploadArea = styled(Box)(({ theme }) => ({
 }));
 export const StyledInputPlaced = styled(Box)(({theme})=>({
               border:'1px dashed',
+              padding:4,
               borderRadius:2,
               backgroundColor:alpha(theme.palette.divider, 0.05),
               borderColor:theme.palette.divider,
 
 }))
+export const StyledDemoBox = styled(Box)(({theme})=>[{
+    border:'1px solid',
+    borderColor:theme.palette.divider,
+    // boxShadow:theme.shadows[2]
+
+},theme.applyStyles('light',{
+    // border:'1px solid',
+    // borderColor:theme.palette.divider,
+    boxShadow:'hsl(200, 0%, 100%) 0 1px 0 inset, hsla(215, 15%, 92%, 0.4) 0 -1px 0 inset, hsla(215, 15%, 89%, 0.5) 0 1px 2px 0'
+},),theme.applyStyles('dark',{
+    // border:'1px solid',
+    // borderColor:theme.palette.divider,
+    boxShadow:`hsla(210, 14%, 22%, 0.1) 0 1px 0 inset, ${theme.palette.common.black} 0 -1px 0 inset, ${theme.palette.common.black} 0 1px 2px 0`
+})])
+export const StyledCatureBox = styled(Box)(({theme})=>[{
+    borderRadius: 6,      
+    // bgcolor:theme.palette.background.paper,
+    border:'1px solid',
+    borderColor:theme.palette.divider
+}])
 export default StyledButton

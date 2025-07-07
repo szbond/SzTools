@@ -2,7 +2,7 @@ import React, { useEffect, useState, type CSSProperties } from "react";
 import { Box, Slider, Typography } from "@mui/material";
 import{useTheme} from '../../context/Context';
 import { NavLink } from "react-router";
-
+import {StyledDemoBox} from '../../styledComponents/StyledCompo'
 // 类型定义
 interface ImageFragment {
   id: string;
@@ -76,12 +76,7 @@ const SplitImgDemo: React.FC<CompositeImageProps> = ({
   },[smllSc])
 
   return (<div
-  className="splitDemo flex_col "><Box 
-  sx={(theme)=>({
-    border:'1px solid',
-    borderColor:theme.palette.divider,
-    boxShadow:theme.shadows[2]
-  })}
+  className="splitDemo flex_col "><StyledDemoBox 
   className="splitDemoCon"
 >效果展示，滑动以切割 or <NavLink to='./SplitImg'><Typography sx={{
   display:'inline'
@@ -95,7 +90,7 @@ const SplitImgDemo: React.FC<CompositeImageProps> = ({
   // valueLabelDisplay="auto"
   value={gapVal}
   onChange={(_event, value,)=>{setGap(value)}}
-  ></Slider></Box>
+  ></Slider></StyledDemoBox>
     <div className="splitDemoGrid" style={containerStyle}>
       {fragments.map((fragment) => (
         <img
