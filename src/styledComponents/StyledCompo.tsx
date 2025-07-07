@@ -245,7 +245,15 @@ export const StyledDemoBox = styled(Box)(({theme})=>[{
 export const StyledCatureBox = styled(Box)(({theme})=>[{
     borderRadius: 6,      
     // bgcolor:theme.palette.background.paper,
+    backgroundColor:alpha(theme.palette.divider, 0.01),
     border:'1px solid',
-    borderColor:theme.palette.divider
+    borderColor:theme.palette.divider,
+    '&:hover':{
+        backgroundColor:theme.palette.background.paper,
+        borderColor:theme.palette.primary.main,
+
+
+
+    }
 }])
 export default StyledButton

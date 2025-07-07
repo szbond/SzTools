@@ -15,6 +15,7 @@ import {
 import {StyledInputPlaced, StyledCatureBox} from '../styledComponents/StyledCompo'
 import {FluentColorLinkMultiple24,FluentColorApps24,CatppuccinImage,FluentEmojiFlatUpDownArrow,FluentColorDismissCircle24,FluentColorImage24, FluentEmojiFlatLeftRightArrow,FluentColorArrowSquare24,FluentEmojiFlatLeftArrow, FluentEmojiFlatRightArrow} from '../icon/MyIcon'
 import { NavLink } from 'react-router';
+import FileUpload from './FileUpload';
 type Rectangle = {
   id: string;
   x: number;
@@ -720,27 +721,7 @@ const drawCanvas = useCallback(() => {
               </Box>
             </>
           ) : (
-            <div style={{
-              flex: '1',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding: '40px',
-              textAlign: 'center'
-            }}>
-              <StyledCatureBox className='flex_row allCenter'>
-                <span style={{ fontSize: '48px', color: '#3498db' }}><CatppuccinImage/></span>
-              </StyledCatureBox>
-              <h3 style={{ fontSize: '1.8rem', marginBottom: '10px', color: '#2c3e50' }}>选择一张图片</h3>
-              <p style={{ color: '#34495e', marginBottom: '20px', maxWidth: '400px' }}>支持 JPG、PNG 格式的图片文件 </p>
-              
-              <Button 
-              variant='contained'
-                onClick={() => fileInputRef.current?.click()}>
-                选择图片
-              </Button>
-            </div>
+<FileUpload clickEvent={()=>{fileInputRef.current?.click()}}></FileUpload>
           )}
           
           <input 

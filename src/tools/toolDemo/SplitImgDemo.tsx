@@ -1,5 +1,8 @@
 import React, { useEffect, useState, type CSSProperties } from "react";
-import { Box, Slider, Typography } from "@mui/material";
+import { 
+  // Box, 
+  Slider, 
+  Typography } from "@mui/material";
 import{useTheme} from '../../context/Context';
 import { NavLink } from "react-router";
 import {StyledDemoBox} from '../../styledComponents/StyledCompo'
