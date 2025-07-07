@@ -222,7 +222,7 @@ export const StyledUploadArea = styled(Box)(({ theme }) => ({
 }));
 export const StyledInputPlaced = styled(Box)(({theme})=>({
               border:'1px dashed',
-              padding:4,
+            //   padding:4,
               borderRadius:2,
               backgroundColor:alpha(theme.palette.divider, 0.05),
               borderColor:theme.palette.divider,
