@@ -46,6 +46,7 @@ export default function LeftBar(props:LeftBarProps){
                 {links.map((link:Links, ind:number)=><StyledNavlink key={ind} className='leftBarItem text_left'  to={link.path}>
                     <Typography className='flex_row allCenter' sx={{
                         paddingLeft:4,
+                        paddingRight:6
                         }} variant="body1">
                         {link.name}
                         </Typography>
