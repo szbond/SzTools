@@ -44,7 +44,9 @@ export default function LeftBar(props:LeftBarProps){
                 <StyledTypography variant="caption">图片工具
                 </StyledTypography>
                 {links.map((link:Links, ind:number)=><StyledNavlink key={ind} className='leftBarItem text_left'  to={link.path}>
-                    <Typography sx={{paddingLeft:3,alignContent:'center'}} variant="body1">
+                    <Typography className='flex_row allCenter' sx={{
+                        paddingLeft:4,
+                        }} variant="body1">
                         {link.name}
                         </Typography>
                     </StyledNavlink>)}
